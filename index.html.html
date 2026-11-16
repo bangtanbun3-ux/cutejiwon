@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>목포중앙고등학교 급식소 - 최후의 만찬</title>
+    <!-- Tailwind CSS 로드 -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@400;500;700&family=Noto+Serif+KR:wght@600;700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            background-color: #120e10;
+            color: #f7f2f4;
+            font-family: 'Noto Sans KR', sans-serif;
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(185, 28, 50, 0.35) 0%, transparent 65%),
+                radial-gradient(circle at 10% 90%, rgba(120, 15, 30, 0.28) 0%, transparent 60%),
+                linear-gradient(180deg, #181014 0%, #0d0a0b 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .font-horror-title {
+            font-family: 'Noto Serif KR', serif;
+            font-weight: 900;
+            letter-spacing: -0.02em;
+        }
+
+        .font-horror-latin {
+            font-family: 'Cinzel Decorative', serif;
+        }
+
+        .font-horror-serif {
+            font-family: 'Gowun Batang', 'Noto Serif KR', serif;
+        }
+
+        .blood-glow {
+            text-shadow: 0 2px 14px rgba(225, 29, 72, 0.6), 0 0 30px rgba(159, 18, 57, 0.45);
+        }
+
+        .blood-box-shadow {
+            box-shadow: 0 12px 35px -5px rgba(0, 0, 0, 0.75), 0 0 22px rgba(159, 18, 57, 0.22);
+        }
+
+        @keyframes pulse-border {
+            0%, 100% { border-color: rgba(190, 18, 60, 0.5); }
+            50% { border-color: rgba(244, 63, 94, 0.9); }
+        }
+
+        .horror-card {
+            background: linear-gradient(155deg, #23181c 0%, #171013 100%);
+            border: 1px solid rgba(190, 18, 60, 0.55);
+            animation: pulse-border 5s infinite ease-in-out;
+        }
+
+        input[type="date"]::-webkit-calendar-picker-indicator {
+            filter: invert(85%) sepia(40%) saturate(1800%) hue-rotate(315deg) brightness(110%) contrast(95%);
+            cursor: pointer;
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #120e10;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #9f1239;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body class="flex flex-col items-center justify-between p-4 sm:p-6 selection:bg-rose-800 selection:text-white">
+
+    <main class="w-full max-w-md mx-auto my-auto">
+        
+        <!-- 헤더 영역 -->
+        <header class="text-center mb-5 pt-2">
+            <div class="inline-flex items-center gap-1.5 px-3.5 py-1 mb-2 text-xs font-semibold tracking-wider text-rose-200 border border-rose-500/40 rounded-full bg-rose-950/70 shadow-sm">
+                <span>🕯️</span>
+                <span>전남 목포시 지적로 36 · 목포중앙고 공식 연동</span>
+            </div>
+            <p class="font-horror-latin text-[11px] tracking-[0.28em] text-rose-400 uppercase mb-1">
+                Mokpo Joongang High School
+            </p>
+            <h1 class="text-3xl sm:text-4xl font-horror-title text-rose-50 blood-glow">
+                목포중앙고등학교 급식소
+            </h1>
+            <p class="text-xs sm:text-sm text-rose-200/80 font-horror-serif mt-2">
+                "오늘 준비된 만찬도... 한 톨도 남김없이 비우셔야 합니다."
+            </p>
+        </header>
+
+        <!-- ⚰️ 최후의 만찬 (선호 특식 D-Day 카운트다운) -->
+        <section id="last-supper-box" class="horror-card rounded-2xl p-4 sm:p-5 mb-5 blood-box-shadow relative overflow-hidden">
+            <div class="flex items-center justify-between border-b border-rose-800/50 pb-2.5 mb-3">
+                <div class="flex items-center gap-2">
+                    <span class="text-xl">⚰️</span>
+                    <div>
+                        <h2 class="text-sm sm:text-base font-horror-title text-rose-100 blood-glow">
+                            최후의 만찬 예고 (선호 특식 D-Day)
+                        </h2>
+                        <p class="text-[11px] text-rose-300/80">고등학생 선호 특식까지 남은 시간</p>
+                    </div>
+                </div>
+                <span id="last-supper-badge" class="px-3 py-1 rounded-full text-xs sm:text-sm font-black bg-rose-700 text-white border border-rose-400/80 shadow-lg">
+                    탐색 중...
+                </span>
+            </div>
+            <div id="last-supper-content" class="text-xs sm:text-sm text-rose-100 font-horror-serif leading-relaxed">
+                <!-- JS 렌더링 -->
+            </div>
+        </section>
+
+        <!-- 날짜 선택 및 빠른 이동 컨트롤 -->
+        <section class="horror-card rounded-2xl p-4 sm:p-5 mb-5 blood-box-shadow">
+            <div class="flex items-center justify-between mb-2">
+                <label for="meal-date" class="block text-xs font-bold text-rose-300 font-horror-serif">
+                    🩸 조회할 날짜를 선택하십시오
+                </label>
+                <div class="flex items-center gap-1.5">
+                    <a href="https://mokpojoongang.hs.jne.kr/mokpojoongang_hs/ad/fm/foodmenu/selectFoodMenuView.do?mi=110289" target="_blank" rel="noopener noreferrer"
+                       class="text-[11px] px-2 py-0.5 rounded-md bg-[#2a1d22] hover:bg-rose-900/80 text-rose-200 border border-rose-700/60 transition">
+                        학교 공식 홈페이지 ↗
+                    </a>
+                    <button id="today-btn" type="button" class="text-[11px] px-2.5 py-0.5 rounded-md bg-rose-900/70 hover:bg-rose-800 text-rose-100 border border-rose-500/50 transition font-bold">
+                        오늘로 이동
+                    </button>
+                </div>
+            </div>
+            <div class="flex items-center gap-2">
+                <button id="prev-day-btn" aria-label="이전 날짜" class="p-3 bg-[#2d1f24] hover:bg-rose-900/80 active:scale-95 text-rose-200 border border-rose-700/60 rounded-xl transition font-bold">
+                    ◀
+                </button>
+                <input type="date" id="meal-date" 
+                    class="w-full p-3 bg-[#140e10] text-rose-50 font-bold text-center border border-rose-700/70 rounded-xl focus:outline-none focus:ring-2 focus:ring-rose-500 transition">
+                <button id="next-day-btn" aria-label="다음 날짜" class="p-3 bg-[#2d1f24] hover:bg-rose-900/80 active:scale-95 text-rose-200 border border-rose-700/60 rounded-xl transition font-bold">
+                    ▶
+                </button>
+            </div>
+
+            <div class="mt-3.5 pt-3 border-t border-rose-900/50">
+                <p class="text-[11px] text-rose-300/80 mb-2">빠른 날짜 이동:</p>
+                <div id="quick-dates" class="flex flex-wrap gap-1.5">
+                    <!-- JS 렌더링 -->
+                </div>
+            </div>
+        </section>
+
+        <!-- 급식 메뉴 출력 영역 -->
+        <section id="meal-display" class="horror-card rounded-2xl p-5 sm:p-6 blood-box-shadow relative overflow-hidden">
+            <div class="absolute -right-3 -bottom-3 text-7xl opacity-[0.07] pointer-events-none select-none">
+                🥀
+            </div>
+
+            <!-- 조식 / 중식 / 석식 탭 -->
+            <div class="grid grid-cols-3 gap-1.5 p-1 bg-[#140e10] border border-rose-900/60 rounded-xl mb-4">
+                <button type="button" data-meal-type="breakfast" class="meal-type-btn py-2 text-xs font-bold rounded-lg text-rose-200/70 hover:text-white transition">
+                    🌅 조식
+                </button>
+                <button type="button" data-meal-type="lunch" class="meal-type-btn py-2 text-xs font-bold rounded-lg bg-rose-800 text-white border border-rose-500/60 transition shadow">
+                    ☀️ 중식
+                </button>
+                <button type="button" data-meal-type="dinner" class="meal-type-btn py-2 text-xs font-bold rounded-lg text-rose-200/70 hover:text-white transition">
+                    🌙 석식
+                </button>
+            </div>
+
+            <div class="flex justify-between items-end border-b border-rose-800/50 pb-3 mb-4">
+                <div>
+                    <div class="flex items-center gap-1.5">
+                        <span id="display-day-tag" class="text-xs font-bold px-2 py-0.5 bg-rose-900/70 text-rose-100 rounded border border-rose-600/50">중식</span>
+                        <span id="data-source-badge" class="text-[10px] font-semibold px-2 py-0.5 bg-rose-950/80 text-rose-300 rounded border border-rose-700/50">목포중앙고 나이스 실시간</span>
+                    </div>
+                    <h2 id="display-date-title" class="text-xl sm:text-2xl font-bold text-white font-horror-serif mt-1.5">
+                        날짜 로딩 중...
+                    </h2>
+                </div>
+                <div class="text-right">
+                    <span class="text-[11px] text-rose-300/80 block">칼로리</span>
+                    <span id="display-kcal" class="text-sm font-bold text-rose-300">-</span>
+                </div>
+            </div>
+
+            <!-- 메뉴 리스트 -->
+            <ul id="menu-list" class="space-y-2.5 my-4">
+                <!-- JS 렌더링 -->
+            </ul>
+
+            <div id="chef-note-box" class="mt-5 p-3.5 bg-[#2d181e]/90 border-l-4 border-rose-600 rounded-r-xl">
+                <p class="text-xs sm:text-sm text-rose-100 font-horror-serif leading-relaxed" id="chef-note">
+                    "조리실 문틈으로 들여다보지 마세요..."
+                </p>
+            </div>
+        </section>
+
+        <!-- 알레르기 해골 범례 -->
+        <section class="mt-5 p-4 bg-[#1a1316] border border-rose-900/50 rounded-2xl shadow-lg">
+            <h3 class="text-xs font-bold text-rose-200 mb-2.5 flex items-center gap-1.5">
+                <span>💀</span> 식품알레르기 정보 (메뉴 우측 해골 💀 클릭 시 상세 성분 안내)
+            </h3>
+            <div id="allergy-legend" class="grid grid-cols-3 sm:grid-cols-4 gap-2 text-[11px] text-rose-100/90">
+                <!-- JS 렌더링 -->
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="mt-8 mb-2 text-center text-[11px] text-rose-300/60">
+        <p>© 2026 목포중앙고등학교 급식감시위원회 (전남 목포시 지적로 36).</p>
+    </footer>
+
+    <!-- 토스트 메시지 -->
+    <div id="toast-message" class="fixed bottom-5 left-1/2 transform -translate-x-1/2 bg-rose-950 border border-rose-500 text-rose-50 px-4 py-2.5 rounded-xl shadow-2xl text-xs font-bold opacity-0 pointer-events-none transition-opacity duration-300 z-50 whitespace-nowrap">
+        메시지 내용
+    </div>
+
+    <script>
+        /**
+         * 식품알레르기 번호 매핑 (1~19번)
+         */
+        const ALLERGY_MAP = {
+            "1": "난류", "2": "우유", "3": "메밀", "4": "땅콩", "5": "대두",
+            "6": "밀", "7": "고등어", "8": "게", "9": "새우", "10": "돼지고기",
+            "11": "복숭아", "12": "토마토", "13": "아황산류", "14": "호두", "15": "닭고기",
+            "16": "쇠고기", "17": "오징어", "18": "조개류(굴,전복,홍합)", "19": "잣"
+        };
+
+        /**
+         * 메뉴별 직관적인 음식 이모티콘 자동 매칭
+         */
+        function getMenuEmoji(menuName) {
+            const name = menuName.toLowerCase();
+            if (name.includes('밥') || name.includes('덮밥') || name.includes('치밥') || name.includes('볶음밥') || name.includes('라이스')) return '🍚';
+            if (name.includes('국') || name.includes('찌개') || name.includes('탕') || name.includes('전골') || name.includes('부대찌개')) return '🍲';
+            if (name.includes('피자') || name.includes('파이')) return '🍕';
+            if (name.includes('스파게티') || name.includes('파스타') || name.includes('면') || name.includes('우동') || name.includes('쫄면') || name.includes('자장') || name.includes('짬뽕') || name.includes('쌀국수')) return '🍝';
+            if (name.includes('치킨') || name.includes('통살') || name.includes('닭') || name.includes('윙봉') || name.includes('너겟') || name.includes('텐더')) return '🍗';
+            if (name.includes('고기') || name.includes('불고기') || name.includes('제육') || name.includes('돈까스') || name.includes('스테이크') || name.includes('함박') || name.includes('떡갈비') || name.includes('수육') || name.includes('갈비') || name.includes('장조림')) return '🍖';
+            if (name.includes('만두') || name.includes('군만두') || name.includes('물만두')) return '🥟';
+            if (name.includes('김치') || name.includes('깍두기') || name.includes('총각김치')) return '🥬';
+            if (name.includes('빵') || name.includes('샌드위치') || name.includes('크로와상') || name.includes('와플') || name.includes('츄러스') || name.includes('버거') || name.includes('식빵')) return '🥐';
+            if (name.includes('주스') || name.includes('요구르트') || name.includes('요플레') || name.includes('우유') || name.includes('음료') || name.includes('사이다') || name.includes('콜라') || name.includes('푸딩') || name.includes('샤베트') || name.includes('퓨레')) return '🧃';
+            if (name.includes('사과') || name.includes('배') || name.includes('키위') || name.includes('수박') || name.includes('샤인머스캣') || name.includes('청귤')) return '🍎';
+            if (name.includes('김') || name.includes('나물') || name.includes('샐러드') || name.includes('무침') || name.includes('오이초') || name.includes('파프리카')) return '🥗';
+            if (name.includes('떡') || name.includes('떡볶이') || name.includes('분모자') || name.includes('치즈떡')) return '🍡';
+            if (name.includes('생선') || name.includes('참치') || name.includes('고등어') || name.includes('바지락') || name.includes('새우') || name.includes('게살') || name.includes('오징어')) return '🐟';
+            return '🍴';
+        }
+
+        let currentDate = new Date().toISOString().split('T')[0];
+        let currentMealType = 'lunch';
+        let cachedMeals = {};
+
+        function showToast(text) {
+            const toast = document.getElementById('toast-message');
+            toast.textContent = text;
+            toast.style.opacity = '1';
+            setTimeout(() => { toast.style.opacity = '0'; }, 2600);
+        }
+
+        function parseMenuWithAllergy(menuStr) {
+            const regex = /\(([\d.]+)\)/g;
+            let match;
+            let allergyNums = [];
+
+            while ((match = regex.exec(menuStr)) !== null) {
+                const nums = match[1].split('.').filter(n => n.trim() !== '');
+                allergyNums = allergyNums.concat(nums);
+            }
+            allergyNums = [...new Set(allergyNums)];
+
+            let cleanName = menuStr.replace(/\s*\([\d.]+\)/g, '').trim();
+            let emoji = getMenuEmoji(cleanName);
+            let html = `<span>${emoji} ${cleanName}</span>`;
+
+            if (allergyNums.length > 0) {
+                const detailStr = allergyNums.map(n => `${n}번(${ALLERGY_MAP[n] || '기타'})`).join(', ');
+                html += ` <button onclick="showToast('💀 알레르기 주의 성분: ${detailStr}')" class="inline-flex items-center gap-0.5 px-1.5 py-0.5 ml-1.5 text-[11px] font-bold bg-rose-950/90 hover:bg-rose-900 text-rose-300 border border-rose-700/70 rounded-md transition cursor-pointer shadow-sm" title="클릭하여 알레르기 성분 확인"><span>💀</span></button>`;
+            }
+            return html;
+        }
+
+        function renderAllergyLegend() {
+            const container = document.getElementById('allergy-legend');
+            let html = '';
+            for (let [num, name] of Object.entries(ALLERGY_MAP)) {
+                html += `<div class="p-1.5 bg-[#140e10] border border-rose-950 rounded flex items-center gap-1">
+                    <span class="text-rose-500 font-bold">💀</span>
+                    <span class="truncate text-rose-200/80" title="${num}.${name}">${num}.${name}</span>
+                </div>`;
+            }
+            container.innerHTML = html;
+        }
+
+        // 목포중앙고 나이스 API 호출 (학교코드: 8490273, 교육청: Q10)
+        async function fetchMokpoJoongangMeal(dateStr) {
+            const formattedDate = dateStr.replace(/-/g, '');
+            if (cachedMeals[formattedDate]) return cachedMeals[formattedDate];
+
+            const url = `https://open.neis.go.kr/hub/mealServiceDietInfo?KEY=&Type=json&pIndex=1&pSize=5&ATPT_OFCDC_SC_CODE=Q10&SD_SCHUL_CODE=8490273&MLSV_YMD=${formattedDate}`;
+
+            try {
+                const res = await fetch(url);
+                const data = await res.json();
+                
+                if (data && data.mealServiceDietInfo) {
+                    const rows = data.mealServiceDietInfo[1].row;
+                    let dayResult = {};
+                    rows.forEach(row => {
+                        let typeKey = row.MMEF_SC_NM === '조식' ? 'breakfast' : row.MMEF_SC_NM === '석식' ? 'dinner' : 'lunch';
+                        let rawMenus = row.DDISH_NM.split('<br/>').map(m => m.trim()).filter(m => m);
+                        dayResult[typeKey] = {
+                            kcal: row.CAL_INFO || '정보 없음',
+                            menu: rawMenus
+                        };
+                    });
+                    cachedMeals[formattedDate] = dayResult;
+                    return dayResult;
+                }
+            } catch (e) {
+                console.error("나이스 API 통신 실패", e);
+            }
+            return null;
+        }
+
+        // 최후의 만찬 (선호 특식 탐색 및 D-Day 계산)
+        async function updateLastSupper(dateStr) {
+            const badge = document.getElementById('last-supper-badge');
+            const contentBox = document.getElementById('last-supper-content');
+            badge.textContent = "탐색 중...";
+            contentBox.textContent = "다가오는 특식(피자, 치밥, 갈비찜, 찜닭 등)을 탐색하고 있습니다...";
+
+            const popularKeywords = ['피자', '치밥', '갈비찜', '찜닭', '함박스테이크', '치킨까스', '불닭', '돈까스'];
+            let foundSpecial = null;
+
+            // 오늘부터 향후 14일간 탐색
+            let curr = new Date(dateStr);
+            for (let i = 0; i < 14; i++) {
+                let checkDate = new Date(curr);
+                checkDate.setDate(checkDate.getDate() + i);
+                let dateString = checkDate.toISOString().split('T')[0];
+
+                let mealData = await fetchMokpoJoongangMeal(dateString);
+                if (mealData) {
+                    for (let type of ['lunch', 'dinner', 'breakfast']) {
+                        if (mealData[type] && mealData[type].menu) {
+                            for (let m of mealData[type].menu) {
+                                for (let kw of popularKeywords) {
+                                    if (m.includes(kw)) {
+                                        let cleanName = m.replace(/\s*\([\d.]+\)/g, '').trim();
+                                        foundSpecial = {
+                                            name: cleanName,
+                                            date: dateString,
+                                            dday: i,
+                                            mealTime: type === 'breakfast' ? '조식' : type === 'lunch' ? '중식' : '석식'
+                                        };
+                                        break;
+                                    }
+                                }
+                                if (foundSpecial) break;
+                            }
+                        }
+                        if (foundSpecial) break;
+                    }
+                }
+                if (foundSpecial) break;
+            }
+
+            if (foundSpecial) {
+                badge.textContent = foundSpecial.dday === 0 ? "🔥 오늘 특식!" : `D - ${foundSpecial.dday}`;
+                contentBox.innerHTML = `가장 가까운 선호 특식은 <strong class="text-rose-200">"${foundSpecial.name}"</strong>입니다.<br><span class="text-xs text-rose-300/80">📅 ${foundSpecial.date} (${foundSpecial.mealTime})에 제공됩니다.</span>`;
+            } else {
+                badge.textContent = "예정 없음";
+                contentBox.textContent = "향후 2주간 등록된 특별 선호 메뉴를 찾지 못했습니다.";
+            }
+        }
+
+        function renderQuickDates() {
+            const container = document.getElementById('quick-dates');
+            let dates = [];
+            let curr = new Date(currentDate);
+            for (let i = -2; i <= 2; i++) {
+                let d = new Date(curr);
+                d.setDate(d.getDate() + i);
+                let val = d.toISOString().split('T')[0];
+                let label = `${d.getMonth()+1}/${d.getDate()}(${['일','월','화','수','목','금','토'][d.getDay()]})`;
+                dates.push({ label, val });
+            }
+
+            container.innerHTML = dates.map(d => `
+                <button type="button" onclick="changeDate('${d.val}')" class="text-[11px] px-2.5 py-1 rounded-lg border transition ${d.val === currentDate ? 'bg-rose-800 text-white border-rose-500 font-bold shadow-md' : 'bg-[#140e10] text-rose-200/80 border-rose-900/70 hover:bg-rose-950'}">
+                    ${d.label}
+                </button>
+            `).join('');
+        }
+
+        function changeDate(dateStr) {
+            currentDate = dateStr;
+            document.getElementById('meal-date').value = currentDate;
+            renderQuickDates();
+            renderCurrentMeal();
+            updateLastSupper(currentDate);
+        }
+
+        async function renderCurrentMeal() {
+            const titleEl = document.getElementById('display-date-title');
+            const kcalEl = document.getElementById('display-kcal');
+            const menuListEl = document.getElementById('menu-list');
+            const dayTagEl = document.getElementById('display-day-tag');
+            const chefNoteEl = document.getElementById('chef-note');
+            const sourceBadge = document.getElementById('data-source-badge');
+
+            const dateObj = new Date(currentDate);
+            const days = ['일', '월', '화', '수', '목', '금', '토'];
+            const dayOfWeek = days[dateObj.getDay()];
+            
+            titleEl.textContent = `${currentDate.replace(/-/g, '. ')} (${dayOfWeek})`;
+
+            document.querySelectorAll('.meal-type-btn').forEach(btn => {
+                const type = btn.getAttribute('data-meal-type');
+                if (type === currentMealType) {
+                    btn.className = "meal-type-btn py-2 text-xs font-bold rounded-lg bg-rose-800 text-white border border-rose-500/60 transition shadow";
+                    dayTagEl.textContent = type === 'breakfast' ? '조식' : type === 'lunch' ? '중식' : '석식';
+                } else {
+                    btn.className = "meal-type-btn py-2 text-xs font-bold rounded-lg text-rose-200/70 hover:text-white transition";
+                }
+            });
+
+            menuListEl.innerHTML = `<li class="text-center py-8 text-rose-300/60 font-horror-serif text-sm">목포중앙고 나이스 서버에서 급식 데이터를 불러오는 중... ⏳</li>`;
+            
+            const mealData = await fetchMokpoJoongangMeal(currentDate);
+
+            if (!mealData || !mealData[currentMealType]) {
+                kcalEl.textContent = "급식 정보 없음";
+                sourceBadge.textContent = "목포중앙고 (주말/휴일)";
+                menuListEl.innerHTML = `<li class="text-center py-8 text-rose-300/60 font-horror-serif text-sm">해당 날짜에 등록된 급식이 없습니다. (주말 또는 방학) 🥀</li>`;
+                chefNoteEl.textContent = "조리실의 불이 꺼져 있습니다. 급식이 없는 날입니다.";
+                return;
+            }
+
+            sourceBadge.textContent = "목포중앙고 나이스(NEIS) 연동 완료";
+            const mealObj = mealData[currentMealType];
+            kcalEl.textContent = mealObj.kcal;
+
+            menuListEl.innerHTML = mealObj.menu.map(item => `
+                <li class="flex items-center justify-between p-3 bg-[#171013] border border-rose-900/40 rounded-xl hover:border-rose-600/70 transition shadow-sm">
+                    <span class="text-xs sm:text-sm font-horror-serif text-rose-100 flex items-center flex-wrap gap-1">
+                        ${parseMenuWithAllergy(item)}
+                    </span>
+                    <span class="text-xs text-rose-400 font-bold ml-2">✦</span>
+                </li>
+            `).join('');
+
+            const notes = [
+                "“목포중앙고 영양사 선생님이 엄선한 오늘의 진짜 식단입니다.”",
+                "“알레르기 정보는 해골(💀) 버튼을 터치하여 반드시 확인하세요.”",
+                "“남김없이 모두 먹어야 무사히 교문을 나갈 수 있습니다...”",
+                "“오늘의 메뉴도 한 톨도 남기지 말고 깨끗이 비우십시오.”"
+            ];
+            chefNoteEl.textContent = notes[Math.floor(Math.abs(dateObj.getDate()) % notes.length)];
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const dateInput = document.getElementById('meal-date');
+            dateInput.value = currentDate;
+
+            dateInput.addEventListener('change', (e) => {
+                if (e.target.value) changeDate(e.target.value);
+            });
+
+            document.getElementById('today-btn').addEventListener('click', () => {
+                const todayStr = new Date().toISOString().split('T')[0];
+                changeDate(todayStr);
+                showToast("오늘 날짜로 이동했습니다.");
+            });
+
+            document.getElementById('prev-day-btn').addEventListener('click', () => {
+                const d = new Date(currentDate);
+                d.setDate(d.getDate() - 1);
+                changeDate(d.toISOString().split('T')[0]);
+            });
+
+            document.getElementById('next-day-btn').addEventListener('click', () => {
+                const d = new Date(currentDate);
+                d.setDate(d.getDate() + 1);
+                changeDate(d.toISOString().split('T')[0]);
+            });
+
+            document.querySelectorAll('.meal-type-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    currentMealType = e.currentTarget.getAttribute('data-meal-type');
+                    renderCurrentMeal();
+                });
+            });
+
+            renderAllergyLegend();
+            renderQuickDates();
+            renderCurrentMeal();
+            updateLastSupper(currentDate);
+        });
+    </script>
+</body>
+</html>
